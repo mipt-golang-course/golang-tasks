@@ -1,0 +1,47 @@
+name: Audit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  audit:
+    runs-on: ubuntu-20.04
+    env:
+      GO111MODULE: on
+      GOPRIVATE: github.com/hadal-project
+      HADAL_REPO_TOKEN: ${{ secrets.HADAL_REPO_TOKEN }}
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.ref }}
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.21'
+
+    - name: Verify dependencies
+      run: go mod verify
+
+
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: v1.54
+
+    - name: Install Compose
+      uses: ndeloof/install-compose-action@v0.0.1
+      with:
+        version: v2.1.0 # defaults to 'latest'
+        legacy: true    # will also install in PATH as `docker-compose`
+
+    - name: Install make
+      run: sudo apt install make curl
+
+    - name: Run tests
+      run: make test
