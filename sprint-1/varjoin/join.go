@@ -2,6 +2,11 @@
 
 package varjoin
 
-func Join(sep string, args ...string) string {
-	return ""
+import (
+	"strings"
+)
+
+// Join объединяет строки через разделитель
+func Join(sep string, elements ...string) string {
+	return strings.Join(elements, sep)
 }
