@@ -3,6 +3,7 @@
 package speller
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -19,11 +20,11 @@ var tyNumbers = map[int64]string{
 	7: "seventy", 8: "eighty",
 	9: "ninety"}
 
-var bigNumbers = [5]string{
+var bigNumbers = [6]string{
 	"zero", "hundred",
-	"thousand", "million", "billion"}
+	"thousand", "million", "billion", "billion"}
 
-var numbers = [5]int64{0, 100, 1000, 1000000, 1000000000}
+var numbers = [6]int64{0, 100, 1000, 1000000, 1000000000, 10000000000}
 
 func Floordiv(a, b int64) int64 {
 	var x int64
@@ -66,16 +67,19 @@ func Units(n int64) string {
 func Spell(n int64) string {
 	var result string
 	var iterN int64
+	var sing bool
+	if n < 0 {
+		sing = true
+		n = n * -1
+		fmt.Println(n)
+	}
 	if n == 0 {
 		result = nameNumbers[0]
 	} else if n < 1000 {
 		result = Units(n)
 	} else {
 		var i int64
-		class := DigitOfNumber(n) / 3
-		if class < 2 {
-			class = 2
-		}
+		class := (DigitOfNumber(n) / 3) + 1
 		iterClass := class
 		for i = 1; i <= class; i++ {
 			if n > 999 {
@@ -86,10 +90,16 @@ func Spell(n int64) string {
 			if iterN == 0 {
 				break
 			}
-			result += strings.TrimRight(Units(iterN), " ") + " " + bigNumbers[iterClass] + " "
+			result += strings.TrimRight(Units(iterN), " ") + " "
+			if i != class {
+				result += bigNumbers[iterClass] + " "
+			}
 			n = n % numbers[iterClass]
 			iterClass--
 		}
+	}
+	if sing {
+		result = "minus " + result
 	}
 	return strings.TrimRight(result, " ")
 }
