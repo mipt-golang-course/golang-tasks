@@ -3,7 +3,6 @@
 package speller
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -20,30 +19,9 @@ var tyNumbers = map[int64]string{
 	7: "seventy", 8: "eighty",
 	9: "ninety"}
 
-var bigNumbers = [6]string{
-	"zero", "hundred",
-	"thousand", "million", "billion", "billion"}
+var bigNumbers = [6]string{"billion", "million", "thousand", "hundred"}
 
-var numbers = [6]int64{0, 100, 1000, 1000000, 1000000000, 10000000000}
-
-func Floordiv(a, b int64) int64 {
-	var x int64
-	if a < 0 {
-		x = b - 1
-	}
-	return (a - x) / b
-}
-
-func DigitOfNumber(n int64) int64 {
-	var cnt int64 = 1
-	n = Floordiv(n, 10)
-
-	for n > 0 {
-		n = Floordiv(n, 10)
-		cnt++
-	}
-	return cnt
-}
+var numbers = [4]int64{1000000000, 1000000, 1000, 100}
 
 func Units(n int64) string {
 	var result string
@@ -54,7 +32,7 @@ func Units(n int64) string {
 		n = n % 100
 	}
 	switch {
-	case hundreds == 0 && n < 20:
+	case n > 0 && n < 20:
 		result = result + nameNumbers[n]
 	case n%10 == 0:
 		result = result + tyNumbers[n/10]
@@ -71,7 +49,6 @@ func Spell(n int64) string {
 	if n < 0 {
 		sing = true
 		n = n * -1
-		fmt.Println(n)
 	}
 	if n == 0 {
 		result = nameNumbers[0]
@@ -79,23 +56,20 @@ func Spell(n int64) string {
 		result = Units(n)
 	} else {
 		var i int64
-		class := (DigitOfNumber(n) / 3) + 1
-		iterClass := class
-		for i = 1; i <= class; i++ {
+		for i = 0; i < 4; i++ {
 			if n > 999 {
-				iterN = n / numbers[iterClass]
+				iterN = n / numbers[i]
 			} else {
 				iterN = n
 			}
 			if iterN == 0 {
-				break
+				continue
 			}
 			result += strings.TrimRight(Units(iterN), " ") + " "
-			if i != class {
-				result += bigNumbers[iterClass] + " "
+			if i != 3 {
+				result += bigNumbers[i] + " "
 			}
-			n = n % numbers[iterClass]
-			iterClass--
+			n = n % numbers[i]
 		}
 	}
 	if sing {
