@@ -17,7 +17,7 @@ func TestMyCheck(t *testing.T) {
 		{input: "found numbers 123", resultError: "found numbers"},
 		{input: "not_two space", resultError: "no two spaces"},
 		{input: "all ok man", resultError: ""},
-		{input: "line too long, found numbers 123 and not 2 spaces", resultError: "line is too long;found numbers;no two spaces"},
+		{input: "line too long, found numbers 123 and not 2 spaces", resultError: "found numbers;line is too long;no two spaces"},
 		{input: "line too long, not two spaces", resultError: "line is too long;no two spaces"},
 	} {
 		t.Run(tc.input, func(t *testing.T) {
