@@ -16,8 +16,7 @@ func ComputeLoad(guests []Guest) []Load {
 
 	type MyMap map[int] int
 
-	var result MyMap
-	result = make(MyMap)
+	var result = make(MyMap)
 
 	for _, entry:= range guests{
 		//fmt.Print(entry.CheckInDate)
