@@ -13,5 +13,30 @@ type Load struct {
 }
 
 func ComputeLoad(guests []Guest) []Load {
-	return []Load{}
+
+	type MyMap map[int] int
+
+	var result MyMap
+	result = make(MyMap)
+
+	for _, entry:= range guests{
+		//fmt.Print(entry.CheckInDate)
+		//fmt.Print(entry.CheckOutDate)
+		for iter:= entry.CheckInDate; iter < entry.CheckOutDate ;{
+			result[iter]++
+			iter++
+		}
+	}
+
+	var i = 0
+
+	load := make([]Load, 0)
+
+	for k, v := range result{
+		var test = Load{k,v}
+		load = append(load,test)
+		i++
+	}
+
+	return load
 }
