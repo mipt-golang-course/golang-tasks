@@ -30,6 +30,8 @@ func TwoRegister(n int64) string{
 }
 
 func Spell(n int64) string {
+
+	//check sign
 	var sign string
 	switch {
 		case n ==0: {
@@ -81,9 +83,12 @@ func Spell(n int64) string {
 		number = number/1000
 		count++
 	}
+
+	//build result with sign
 	if sign != ""{
 		return sign + " " + result
 	} else {
 		return result
 	}
+	
 }

@@ -8,7 +8,7 @@ func Join(sep string, args ...string) string {
 		if result != "" {
 			result = result + sep + line
 		} else {
-			result = result + line
+			result = line
 		}
 	}
 	return result
