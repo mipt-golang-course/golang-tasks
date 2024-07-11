@@ -25,15 +25,35 @@ func ComputeLoad(guests []Guest) []Load {
 			result[iter]++
 			iter++
 		}
+		
+		if result[entry.CheckOutDate] != 0{
+
+		} else {
+			result[entry.CheckOutDate] = 0
+		}
 	}
 
 	var i = 0
 
 	load := make([]Load, 0)
 
+	/*for k, _:= range result{
+		if k !=0{
+			if result[k] == result[k-1]{
+				delete(result, k)
+			}
+		}
+	}*/
+
+	var previous = -1
+
 	for k, v := range result{
 		var test = Load{k,v}
-		load = append(load,test)
+		//fmt.Print(k,v,previous)
+		if v != previous{
+			load = append(load,test)
+		}
+		previous = v
 		i++
 	}
 
