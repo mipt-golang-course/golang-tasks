@@ -46,5 +46,7 @@ func ComputeLoad(guests []Guest) []Load {
 		i++
 	}
 
+	load = load [1:]
+
 	return load
 }
