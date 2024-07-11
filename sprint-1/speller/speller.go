@@ -73,7 +73,7 @@ func Spell(n int64) string {
 				}
 			}
 			if plus == ""{
-				result = result
+				
 			} else if result == ""{
 				result = plus
 			} else {
@@ -90,5 +90,5 @@ func Spell(n int64) string {
 	} else {
 		return result
 	}
-	
+
 }
