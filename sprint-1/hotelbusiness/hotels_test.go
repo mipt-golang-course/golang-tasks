@@ -68,7 +68,7 @@ func TestComputeLoad_basic(t *testing.T) {
 	}
 }
 
-/*func TestComputeLoad_stress1(t *testing.T) {
+func TestComputeLoad_stress1(t *testing.T) {
 	n := 1000000
 	g := make([]Guest, 0, 1000000)
 	for i := 0; i < n; i++ {
@@ -86,4 +86,4 @@ func TestComputeLoad_stress2(t *testing.T) {
 	}
 	l := ComputeLoad(g)
 	require.Equal(t, []Load{{0, 1}, {n, 0}}, l)
-}*/
+}
