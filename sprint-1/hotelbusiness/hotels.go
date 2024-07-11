@@ -37,7 +37,7 @@ func ComputeLoad(guests []Guest) []Load {
 
 	var previous = -1
 
-	for iter:=0; iter < len(result) + 1; iter++{
+	for iter:=0; iter < len(result) + 3; iter++{
 		var test = Load{iter,result[iter]}
 		if result[iter] != previous{
 			load = append(load,test)
