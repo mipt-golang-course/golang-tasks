@@ -19,8 +19,6 @@ func ComputeLoad(guests []Guest) []Load {
 	var result = make(MyMap)
 
 	for _, entry:= range guests{
-		//fmt.Print(entry.CheckInDate)
-		//fmt.Print(entry.CheckOutDate)
 		for iter:= entry.CheckInDate; iter < entry.CheckOutDate ;{
 			result[iter]++
 			iter++
@@ -35,25 +33,16 @@ func ComputeLoad(guests []Guest) []Load {
 
 	var i = 0
 
-	load := make([]Load, 0)
-
-	/*for k, _:= range result{
-		if k !=0{
-			if result[k] == result[k-1]{
-				delete(result, k)
-			}
-		}
-	}*/
+	load := make([]Load,0)
 
 	var previous = -1
 
-	for k, v := range result{
-		var test = Load{k,v}
-		//fmt.Print(k,v,previous)
-		if v != previous{
+	for iter:=0; iter < len(result) + 1; iter++{
+		var test = Load{iter,result[iter]}
+		if result[iter] != previous{
 			load = append(load,test)
 		}
-		previous = v
+		previous = result[iter]
 		i++
 	}
 
