@@ -31,8 +31,6 @@ func ComputeLoad(guests []Guest) []Load {
 		}
 	}
 
-	var i = 0
-
 	load := make([]Load, 0)
 
 	var previous = -1
@@ -43,7 +41,6 @@ func ComputeLoad(guests []Guest) []Load {
 			load = append(load, test)
 		}
 		previous = result[iter]
-		i++
 	}
 
 	if load[0].GuestCount == 0 {
