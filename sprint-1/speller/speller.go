@@ -41,6 +41,7 @@ func Spell(n int64) string {
 	return strings.TrimSpace(strings.Join(parts, " "))
 }
 
+// wfw
 func convertHundreds(n int64) string {
 	if n == 0 {
 		return ""
