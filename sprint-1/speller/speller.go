@@ -41,23 +41,27 @@ func Spell(n int64) string {
 	return strings.TrimSpace(strings.Join(parts, " "))
 }
 
-// wfw
 func convertHundreds(n int64) string {
+	// Базовый случай: если число 0, вернуть пустую строку
 	if n == 0 {
 		return ""
-	} else if n < 20 {
+	}
+
+	if n < 20 {
 		return ones[n]
-	} else if n < 100 {
+	}
+
+	if n < 100 {
 		if n%10 == 0 {
 			return tens[n/10]
 		}
 		return tens[n/10] + "-" + ones[n%10]
-	} else {
-		if n%100 == 0 {
-			return ones[n/100] + " hundred"
-		}
-		return ones[n/100] + " hundred " + convertTens(n%100)
 	}
+
+	if n%100 == 0 {
+		return ones[n/100] + " hundred"
+	}
+	return ones[n/100] + " hundred " + convertTens(n%100)
 }
 
 func convertTens(n int64) string {
