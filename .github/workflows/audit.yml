@@ -9,7 +9,7 @@ on:
 jobs:
 
   audit:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       GO111MODULE: on
     steps:
@@ -21,7 +21,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: '1.21'
+        go-version: '1.22.3'
 
     - name: Verify dependencies
       run: go mod verify
@@ -31,12 +31,6 @@ jobs:
       uses: golangci/golangci-lint-action@v3
       with:
         version: v1.54
-
-    - name: Install Compose
-      uses: ndeloof/install-compose-action@v0.0.1
-      with:
-        version: v2.1.0 # defaults to 'latest'
-        legacy: true    # will also install in PATH as `docker-compose`
 
     - name: Install make
       run: sudo apt install make curl
