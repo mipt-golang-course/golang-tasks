@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       GO111MODULE: on
-      GOPRIVATE: github.com/hadal-project
-      HADAL_REPO_TOKEN: ${{ secrets.HADAL_REPO_TOKEN }}
     steps:
     - uses: actions/checkout@v2
       with:
