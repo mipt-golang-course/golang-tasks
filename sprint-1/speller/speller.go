@@ -1,20 +1,20 @@
-//go:build !solution
-
 package speller
 
-import "strings"
+import (
+	"strings"
+)
 
 var (
-	ones = []string{
-		"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-		"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
-		"seventeen", "eighteen", "nineteen",
+	ones = map[int64]string{
+		1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine",
+		10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen", 15: "fifteen", 16: "sixteen",
+		17: "seventeen", 18: "eighteen", 19: "nineteen",
 	}
-	tens = []string{
-		"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety",
+	tens = map[int64]string{
+		2: "twenty", 3: "thirty", 4: "forty", 5: "fifty", 6: "sixty", 7: "seventy", 8: "eighty", 9: "ninety",
 	}
-	scales = []string{
-		"", "thousand", "million", "billion", "trillion",
+	scales = map[int]string{
+		1: "thousand", 2: "million", 3: "billion", 4: "trillion",
 	}
 )
 
@@ -42,29 +42,31 @@ func Spell(n int64) string {
 }
 
 func convertHundreds(n int64) string {
-	if n == 0 {
+	switch {
+	case n == 0:
 		return ""
-	} else if n < 20 {
+	case n < 20:
 		return ones[n]
-	} else if n < 100 {
-		if n%10 == 0 {
-			return tens[n/10]
-		}
-		return tens[n/10] + "-" + ones[n%10]
-	} else {
-		if n%100 == 0 {
+	case n < 100:
+		return convertTens(n)
+	default:
+		remainder := n % 100
+		if remainder == 0 {
 			return ones[n/100] + " hundred"
 		}
-		return ones[n/100] + " hundred " + convertTens(n%100)
+		return ones[n/100] + " hundred " + convertTens(remainder)
 	}
 }
 
 func convertTens(n int64) string {
-	if n < 20 {
+	switch {
+	case n < 20:
 		return ones[n]
+	default:
+		remainder := n % 10
+		if remainder == 0 {
+			return tens[n/10]
+		}
+		return tens[n/10] + "-" + ones[remainder]
 	}
-	if n%10 == 0 {
-		return tens[n/10]
-	}
-	return tens[n/10] + "-" + ones[n%10]
 }
