@@ -1,5 +1,10 @@
 package reflect_spell
 
+import (
+	"log"
+	"reflect"
+)
+
 type Spell interface {
 	// название заклинания
 	Name() string
@@ -21,7 +26,33 @@ func CastToAll(spell Spell, objects []interface{}) {
 }
 
 func CastTo(spell Spell, object interface{}) {
-	// реализуйте эту функцию.
+	if player, ok := object.(CastReceiver); ok {
+		player.ReceiveSpell(spell)
+		return
+	}
+
+	// Player's not connected to interface. Apply spell with reflection
+	val := reflect.ValueOf(object)
+
+	if val.Kind() == reflect.Ptr {
+		val = val.Elem()
+	}
+
+	field := val.FieldByName(spell.Char())
+
+	if field.IsValid() {
+		if field.CanSet() {
+			if field.Kind() == reflect.Int {
+				field.SetInt(field.Int() + int64(spell.Value()))
+			} else {
+				log.Printf("Field %s in object %v has non-iteger type. Cannot apply", spell.Char(), object)
+			}
+		} else {
+			log.Printf("Field %s cannot be set in object %v", spell.Char(), object)
+		}
+	} else {
+		log.Printf("Field %s not found in object %v", spell.Char(), object)
+	}
 }
 
 type spell struct {
