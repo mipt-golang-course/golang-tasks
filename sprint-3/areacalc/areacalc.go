@@ -8,26 +8,57 @@ type Shape interface {
 }
 
 type Rectangle struct {
-	// TODO: implement me
+	width, height float64
+	name          string
 }
 
-func NewRectangle(float64, float64, string) *Rectangle {
-	// TODO: implement me
-	return &Rectangle{}
+func NewRectangle(width, height float64, name string) *Rectangle {
+	return &Rectangle{width: width, height: height, name: name}
 }
 
-// TODO: implement me
+func (rect Rectangle) Area() float64 {
+	return rect.width * rect.height
+}
+
+func (Rectangle) Type() string {
+	return "rectangle"
+}
 
 type Circle struct {
-	// TODO: implement me
+	radius float64
+	name   string
 }
 
-func NewCircle(float64, string) *Circle {
-	// TODO: implement me
-	return &Circle{}
+func NewCircle(radius float64, name string) *Circle {
+	return &Circle{radius: radius, name: name}
+}
+
+func (cir Circle) Area() float64 {
+	return pi * cir.radius * cir.radius
+}
+
+func (Circle) Type() string {
+	return "circle"
 }
 
 func AreaCalculator(figures []Shape) (string, float64) {
-	// TODO: implement me
-	return "", 0.0
+	if len(figures) == 0 {
+		return "", 0.0
+	}
+
+	ret := 0.0
+
+	var str string
+
+	ret += figures[0].Area()
+	str += figures[0].Type()
+
+	for _, fig := range figures[1:] {
+		ret += fig.Area()
+		str += "-"
+		str += fig.Type()
+	}
+
+	return str, ret
+
 }
