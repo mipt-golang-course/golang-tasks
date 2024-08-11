@@ -1,8 +1,9 @@
-package mycheck
+package mycheck_test
 
 import (
 	"testing"
 
+	my_check "github.com/mipt-golang-course/golang-tasks/sprint-2/custom-error"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -21,7 +22,7 @@ func TestMyCheck(t *testing.T) {
 		{input: "line too long, not two spaces", resultError: "line is too long;no two spaces"},
 	} {
 		t.Run(tc.input, func(t *testing.T) {
-			err := MyCheck(tc.input)
+			err := my_check.MyCheck(tc.input)
 
 			if tc.resultError == "" {
 				assert.Nil(t, err)

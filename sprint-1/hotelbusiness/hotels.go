@@ -28,7 +28,7 @@ func ComputeLoad(guests []Guest) []Load {
 	}
 
 	// Извлекаем и сортируем все уникальные даты
-	var dates []int
+	dates := make([]int, 0, len(changes))
 	for date := range changes {
 		dates = append(dates, date)
 	}

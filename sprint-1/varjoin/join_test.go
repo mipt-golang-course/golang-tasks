@@ -1,7 +1,9 @@
-package varjoin
+package varjoin_test
 
 import (
 	"testing"
+
+	varjoin "github.com/mipt-golang-course/golang-tasks/sprint-1/varjoin"
 
 	"github.com/stretchr/testify/require"
 )
@@ -29,7 +31,7 @@ func TestFormat(t *testing.T) {
 		},
 	} {
 		t.Run(tc.result, func(t *testing.T) {
-			require.Equal(t, tc.result, Join(tc.sep, tc.args...))
+			require.Equal(t, tc.result, varjoin.Join(tc.sep, tc.args...))
 		})
 	}
 }

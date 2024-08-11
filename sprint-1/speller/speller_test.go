@@ -1,8 +1,10 @@
-package speller
+package speller_test
 
 import (
 	"fmt"
 	"testing"
+
+	spell "github.com/mipt-golang-course/golang-tasks/sprint-1/speller"
 )
 
 type testCase struct {
@@ -86,7 +88,7 @@ func TestSpell(t *testing.T) {
 		{number: -999999999999, spelling: "minus nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-nine"},
 	} {
 		t.Run(fmt.Sprintf("%d", tc.number), func(t *testing.T) {
-			if spelling := Spell(tc.number); spelling != tc.spelling {
+			if spelling := spell.Spell(tc.number); spelling != tc.spelling {
 				t.Errorf("%d should be spelled as %q; got %q", tc.number, tc.spelling, spelling)
 			}
 		})
