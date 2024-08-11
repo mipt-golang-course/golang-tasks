@@ -1,5 +1,12 @@
 package testequal
 
+// Important information!
+// If you change this file,
+// then change 33,34,35 strings
+// There should be numbers of
+// strings with AssertEqual,
+// AssertNotEqual and RequireEqual
+
 import (
 	"bytes"
 	"errors"
@@ -26,9 +33,9 @@ func TestHelper(t *testing.T) {
 	err := cmd.Run()
 	var exitErr *exec.ExitError
 	if errors.As(err, &exitErr) && !exitErr.Success() {
-		require.Contains(t, buf.String(), "helper_test.go:15")
-		require.Contains(t, buf.String(), "helper_test.go:16")
-		require.Contains(t, buf.String(), "helper_test.go:17")
+		require.Contains(t, buf.String(), "helper_test.go:22")
+		require.Contains(t, buf.String(), "helper_test.go:23")
+		require.Contains(t, buf.String(), "helper_test.go:24")
 		return
 	}
 	t.Fatalf("process ran with err %v, want exit status 1", err)
