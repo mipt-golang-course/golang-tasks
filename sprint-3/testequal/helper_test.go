@@ -1,4 +1,4 @@
-package testequal_test
+package testequal
 
 import (
 	"bytes"
@@ -7,15 +7,14 @@ import (
 	"os/exec"
 	"testing"
 
-	assertion "github.com/mipt-golang-course/golang-tasks/sprint-3/testequal"
 	"github.com/stretchr/testify/require"
 )
 
 func TestHelper(t *testing.T) {
 	if os.Getenv("FAIL_ASSERTIONS") == "1" {
-		assertion.AssertEqual(t, 1, 2, "%d must be equal to %d", 1, 2)
-		assertion.AssertNotEqual(t, 1, 1, "1 != 1")
-		assertion.RequireEqual(t, 1, 2)
+		AssertEqual(t, 1, 2, "%d must be equal to %d", 1, 2)
+		AssertNotEqual(t, 1, 1, "1 != 1")
+		RequireEqual(t, 1, 2)
 		return
 	}
 
