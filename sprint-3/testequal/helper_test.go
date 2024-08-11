@@ -26,9 +26,9 @@ func TestHelper(t *testing.T) {
 	err := cmd.Run()
 	var exitErr *exec.ExitError
 	if errors.As(err, &exitErr) && !exitErr.Success() {
+		require.Contains(t, buf.String(), "helper_test.go:15")
 		require.Contains(t, buf.String(), "helper_test.go:16")
 		require.Contains(t, buf.String(), "helper_test.go:17")
-		require.Contains(t, buf.String(), "helper_test.go:18")
 		return
 	}
 	t.Fatalf("process ran with err %v, want exit status 1", err)
