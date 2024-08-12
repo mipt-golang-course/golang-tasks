@@ -32,7 +32,7 @@ func TestHelper(t *testing.T) {
 
 	err := cmd.Run()
 	var exitErr *exec.ExitError
-	if errors.As(err, &exitErr) && !exitErr.Success() {
+	if ok := errors.As(err, &exitErr); ok && !exitErr.Success() {
 		require.Contains(t, buf.String(), "helper_test.go:22")
 		require.Contains(t, buf.String(), "helper_test.go:23")
 		require.Contains(t, buf.String(), "helper_test.go:24")
