@@ -23,25 +23,29 @@ func Spell(num int64) string {
 		num = -num
 	}
 
+	convertLessThanHundred := func(num int) string {
+		res := strings.Builder{}
+		if num/10 >= 2 {
+			if num%10 == 0 {
+				res.WriteString(dictTens[num/10])
+			} else {
+				res.WriteString(dictTens[num/10])
+				res.WriteString("-")
+				res.WriteString(dictToTwenty[num%10])
+			}
+		} else {
+			res.WriteString(dictToTwenty[num])
+		}
+		return res.String()
+	}
+
 	convert := func(num int) string {
 		res := strings.Builder{}
-		remainder := 0
 		if num >= 100 {
 			if res.String() != "" {
 				res.WriteString(" ")
 			}
-			remainder = num / 100
-			if remainder/10 >= 2 {
-				if remainder%10 == 0 {
-					res.WriteString(dictTens[remainder%10])
-				} else {
-					res.WriteString(dictTens[remainder/10])
-					res.WriteString("-")
-					res.WriteString(dictToTwenty[remainder%10])
-				}
-			} else {
-				res.WriteString(dictToTwenty[remainder])
-			}
+			res.WriteString(convertLessThanHundred(num / 100))
 			res.WriteString(" hundred")
 			num %= 100
 		}
@@ -49,17 +53,7 @@ func Spell(num int64) string {
 			if res.String() != "" {
 				res.WriteString(" ")
 			}
-			if num/10 >= 2 {
-				if num%10 == 0 {
-					res.WriteString(dictTens[num/10])
-				} else {
-					res.WriteString(dictTens[num/10])
-					res.WriteString("-")
-					res.WriteString(dictToTwenty[num%10])
-				}
-			} else {
-				res.WriteString(dictToTwenty[num])
-			}
+			res.WriteString(convertLessThanHundred(num))
 		}
 		return res.String()
 	}
