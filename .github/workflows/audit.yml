@@ -9,7 +9,7 @@ on:
 jobs:
 
   audit:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       GO111MODULE: on
     steps:
@@ -21,7 +21,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: '1.21'
+        go-version: '1.24.1'
 
     - name: Verify dependencies
       run: go mod verify
@@ -30,7 +30,7 @@ jobs:
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v3
       with:
-        version: v1.54
+        version: v1.64.8
 
     - name: Install Compose
       uses: ndeloof/install-compose-action@v0.0.1
