@@ -17,30 +17,31 @@ func ComputeLoad(guests []Guest) []Load {
 		return nil
 	}
 
-	start_date := guests[0].CheckInDate
-	end_date := guests[0].CheckOutDate
+	startDate := guests[0].CheckInDate
+	endDate := guests[0].CheckOutDate
+
 	for _, val := range guests {
-		if val.CheckInDate < start_date {
-			start_date = val.CheckInDate
+		if val.CheckInDate < startDate {
+			startDate = val.CheckInDate
 		}
-		if val.CheckOutDate > end_date {
-			end_date = val.CheckOutDate
+		if val.CheckOutDate > endDate {
+			endDate = val.CheckOutDate
 		}
 	}
 
 	var load []Load
-	date_cnt_prev := 0
-	for date := start_date; date <= end_date; date++ {
-		date_cnt := 0
+	dateCntPrev := 0
+	for date := startDate; date <= endDate; date++ {
+		dateCnt := 0
 		for _, val := range guests {
 			if val.CheckInDate <= date && date < val.CheckOutDate {
-				date_cnt++
+				dateCnt++
 			}
 		}
-		if date_cnt != date_cnt_prev {
-			load = append(load, Load{date, date_cnt})
+		if dateCnt != dateCntPrev {
+			load = append(load, Load{date, dateCnt})
 		}
-		date_cnt_prev = date_cnt
+		dateCntPrev = dateCnt
 	}
 	return load
 }
