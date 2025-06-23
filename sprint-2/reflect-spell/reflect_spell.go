@@ -27,8 +27,7 @@ func CastTo(spell Spell, object interface{}) {
 		return
 	}
 
-	objectValue = objectValue.Elem()
-	fieldHealth := objectValue.FieldByName(spell.Char())
+	fieldHealth := objectValue.Elem().FieldByName(spell.Char())
 	if fieldHealth.Kind() == reflect.Int {
 		fieldHealth.SetInt(fieldHealth.Int() + int64(spell.Value()))
 	}
