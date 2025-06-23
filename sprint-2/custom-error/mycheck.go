@@ -27,7 +27,7 @@ func (errStr myStringsErr) Error() string {
 	for _, err := range errStr {
 		messages = append(messages, err.Error())
 	}
-	// Function from sprint-1/varjoin
+
 	return varjoin.Join(";", messages...)
 }
 

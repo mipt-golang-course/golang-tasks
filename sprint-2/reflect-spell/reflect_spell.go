@@ -69,7 +69,6 @@ func CastTo(spell Spell, object interface{}) {
 
 		if fieldName == spell.Char() {
 			if !field.CanSet() {
-				fmt.Println("cant set field")
 				return
 			}
 
