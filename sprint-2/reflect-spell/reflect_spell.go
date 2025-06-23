@@ -1,15 +1,16 @@
 package reflect_spell
 
+import (
+	"fmt"
+	"reflect"
+)
+
 type Spell interface {
-	// название заклинания
 	Name() string
-	// характеристика, на которую воздействует
 	Char() string
-	// количественное значение
 	Value() int
 }
 
-// CastReceiver — если объект удовлетворяет этом интерфейсу, то заклинание применяется через него
 type CastReceiver interface {
 	ReceiveSpell(s Spell)
 }
@@ -21,7 +22,16 @@ func CastToAll(spell Spell, objects []interface{}) {
 }
 
 func CastTo(spell Spell, object interface{}) {
-	// реализуйте эту функцию.
+	objectValue := reflect.ValueOf(object)
+	if objectValue.Kind() != reflect.Ptr {
+		return
+	}
+
+	objectValue = objectValue.Elem()
+	fieldHealth := objectValue.FieldByName(spell.Char())
+	if fieldHealth.Kind() == reflect.Int {
+		fieldHealth.SetInt(fieldHealth.Int() + int64(spell.Value()))
+	}
 }
 
 type spell struct {
@@ -47,7 +57,6 @@ func (s spell) Value() int {
 }
 
 type Player struct {
-	// nolint: unused
 	name   string
 	health int
 }
@@ -72,4 +81,28 @@ type Orc struct {
 
 type Wall struct {
 	Durability int
+}
+
+func main() {
+
+	player := &Player{
+		name:   "Player_1",
+		health: 100,
+	}
+
+	enemies := []interface{}{
+		&Zombie{Health: 1000},
+		&Zombie{Health: 1000},
+		&Orc{Health: 500},
+		&Orc{Health: 500},
+		&Orc{Health: 500},
+		&Daemon{Health: 1000},
+		&Daemon{Health: 1000},
+		&Wall{Durability: 100},
+	}
+
+	CastToAll(newSpell("fire", "Health", -50), append(enemies, player))
+	CastToAll(newSpell("heal", "Health", 190), append(enemies, player))
+
+	fmt.Println(player)
 }
