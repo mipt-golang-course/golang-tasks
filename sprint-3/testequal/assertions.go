@@ -123,9 +123,7 @@ func log(t T, msgAndArgs ...interface{}) {
 //
 // Returns true iff arguments are equal.
 func AssertEqual(t T, expected, actual interface{}, msgAndArgs ...interface{}) bool {
-	if h, ok := t.(interface{ Helper() }); ok {
-		h.Helper()
-	}
+	t.Helper()
 	if checkEqual(expected, actual) {
 		return true
 	}
@@ -140,9 +138,7 @@ func AssertEqual(t T, expected, actual interface{}, msgAndArgs ...interface{}) b
 //
 // Returns true iff arguments are not equal.
 func AssertNotEqual(t T, expected, actual interface{}, msgAndArgs ...interface{}) bool {
-	if h, ok := t.(interface{ Helper() }); ok {
-		h.Helper()
-	}
+	t.Helper()
 	if !checkEqual(expected, actual) {
 		return true
 	}
@@ -153,9 +149,7 @@ func AssertNotEqual(t T, expected, actual interface{}, msgAndArgs ...interface{}
 
 // RequireEqual does the same as AssertEqual but fails caller test immediately.
 func RequireEqual(t T, expected, actual interface{}, msgAndArgs ...interface{}) {
-	if h, ok := t.(interface{ Helper() }); ok {
-		h.Helper()
-	}
+	t.Helper()
 	if checkEqual(expected, actual) {
 		return
 	}
@@ -166,9 +160,7 @@ func RequireEqual(t T, expected, actual interface{}, msgAndArgs ...interface{}) 
 
 // RequireNotEqual does the same as AssertNotEqual but fails caller test immediately.
 func RequireNotEqual(t T, expected, actual interface{}, msgAndArgs ...interface{}) {
-	if h, ok := t.(interface{ Helper() }); ok {
-		h.Helper()
-	}
+	t.Helper()
 	if !checkEqual(expected, actual) {
 		return
 	}

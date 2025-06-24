@@ -1,6 +1,8 @@
 package areacalc
 
-import "strings"
+import (
+	"strings"
+)
 
 const pi = 3.14159
 
@@ -44,7 +46,7 @@ func NewCircle(r float64, shape string) *Circle {
 }
 
 func (circle Circle) Area() float64 {
-	return circle.r * circle.r * pi
+	return pi * circle.r * circle.r
 }
 
 func (circle Circle) Type() string {
@@ -52,10 +54,9 @@ func (circle Circle) Type() string {
 }
 
 func AreaCalculator(figures []Shape) (string, float64) {
-	var (
-		nameOfFigures []string
-		totalArea     float64
-	)
+
+	nameOfFigures := make([]string, 0, len(figures))
+	totalArea := 0.0
 
 	for _, fig := range figures {
 		nameOfFigures = append(nameOfFigures, fig.Type())
