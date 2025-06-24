@@ -22,12 +22,26 @@ func CastToAll(spell Spell, objects []interface{}) {
 }
 
 func CastTo(spell Spell, object interface{}) {
-	objectValue := reflect.ValueOf(object)
-	if objectValue.Kind() != reflect.Ptr {
+	if receiver, ok := object.(CastReceiver); ok {
+		receiver.ReceiveSpell(spell)
 		return
 	}
 
-	fieldHealth := objectValue.Elem().FieldByName(spell.Char())
+	objectValue := reflect.ValueOf(object)
+	if objectValue.Kind() != reflect.Ptr || objectValue.IsNil() {
+		return
+	}
+
+	elem := objectValue.Elem()
+	if elem.Kind() != reflect.Struct {
+		return
+	}
+
+	fieldHealth := elem.FieldByName(spell.Char())
+	if !(fieldHealth.IsValid() && fieldHealth.CanSet()) {
+		return
+	}
+
 	if fieldHealth.Kind() == reflect.Int {
 		fieldHealth.SetInt(fieldHealth.Int() + int64(spell.Value()))
 	}
