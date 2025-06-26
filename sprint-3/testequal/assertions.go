@@ -45,9 +45,7 @@ func checkEqual(expected, actual interface{}) bool {
 
 			switch expElemType.Kind() {
 			case rfl.Uint8:
-				{
 					return bytes.Equal(expVal.Bytes(), actVal.Bytes())
-				}
 			case rfl.Int:
 				{
 					for i := 0; i < expVal.Len(); i++ {
