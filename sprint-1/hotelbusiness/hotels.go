@@ -7,8 +7,8 @@ import (
 )
 
 type Guest struct {
-	CheckInDate  int // 1 - cout
-	CheckOutDate int // 1
+	CheckInDate  int
+	CheckOutDate int
 }
 
 type Load struct {
