@@ -89,7 +89,7 @@ func spelling_after_hundred(n int64) string {
 		v := spelling_to_hundred(n)
 		return strings.TrimSpace(v)
 	case n < 1000:
-		v := spelling_to_hundred(n/100) + " hundred " + spelling_to_hundred(n%100)
+		v := spelling_after_hundred(n/100) + " hundred " + spelling_after_hundred(n%100)
 		return strings.TrimSpace(v)
 
 	case n < 1000000:
