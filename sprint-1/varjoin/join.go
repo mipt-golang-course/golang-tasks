@@ -2,13 +2,12 @@
 
 package varjoin
 
+import "strings"
+
 func Join(sep string, args ...string) string {
 	str := ""
-	if len(args) < 1 {
-		return str
-	}
-	for _, value := range args[:len(args)-1] {
+	for _, value := range args {
 		str = str + value + sep
 	}
-	return str + args[len(args)-1]
+	return strings.TrimRight(str, sep)
 }

@@ -2,6 +2,10 @@
 
 package speller
 
+import (
+	"strings"
+)
+
 var spell_ones = map[int64]string{
 	1: "one",
 	2: "two",
@@ -44,9 +48,23 @@ func Spell(n int64) string {
 	}
 
 	switch {
+
 	case n == 0:
 		return "zero"
 
+	case n < 100:
+		return spelling_to_hundred(n)
+
+	case n >= 100:
+		return spelling_after_hundred(n)
+
+	default:
+		return ""
+	}
+}
+
+func spelling_to_hundred(n int64) string {
+	switch {
 	case n < 10:
 		{
 			return spell_ones[n]
@@ -57,16 +75,35 @@ func Spell(n int64) string {
 		}
 	case n < 100:
 		{
-			v, ok := spell_ones[n%10]
-			if ok {
-				v = "-" + v
-			}
-			return spell_tens[n/10] + v
+			v := spell_tens[n/10] + "-" + spell_ones[n%10]
+			return strings.TrimRight(v, "-")
 		}
+	default:
+		return ""
+	}
+}
+
+func spelling_after_hundred(n int64) string {
+	switch {
+	case n < 100:
+		v := spelling_to_hundred(n)
+		return strings.TrimSpace(v)
 	case n < 1000:
-		{
-			return spell_ones[n/100] + " hundred " + Spell(n%100)
-		}
+		v := spelling_to_hundred(n/100) + " hundred " + spelling_to_hundred(n%100)
+		return strings.TrimSpace(v)
+
+	case n < 1000000:
+		v := spelling_after_hundred(n/1000) + " thousand " + spelling_after_hundred(n%1000)
+		return strings.TrimSpace(v)
+
+	case n < 1000000000:
+		v := spelling_after_hundred(n/1000000) + " million " + spelling_after_hundred(n%1000000)
+		return strings.TrimSpace(v)
+
+	case n < 1000000000000:
+		v := spelling_after_hundred(n/1000000000) + " billion " + spelling_after_hundred(n%1000000000)
+		return strings.TrimSpace(v)
+
 	default:
 		return ""
 	}
