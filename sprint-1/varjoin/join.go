@@ -2,12 +2,19 @@
 
 package varjoin
 
-import "strings"
+import (
+	"strings"
+)
 
 func Join(sep string, args ...string) string {
-	str := ""
+	var str strings.Builder
+
+	str.Grow(len(args) * 2)
+
 	for _, value := range args {
-		str = str + value + sep
+		str.WriteString(value)
+		str.WriteString(sep)
 	}
-	return strings.TrimRight(str, sep)
+	return strings.TrimRight(str.String(), sep)
+
 }
