@@ -9,12 +9,27 @@ import (
 func Join(sep string, args ...string) string {
 	var str strings.Builder
 
-	str.Grow(len(args) * 2)
+	lagrs := len(args)
 
-	for _, value := range args {
-		str.WriteString(value)
+	if lagrs == 0 {
+		return str.String()
+	}
+
+	grow := 0
+	for _, i := range args {
+		grow += len(i)
+	}
+
+	str.Grow(grow)
+
+	for i := 0; i < lagrs-1; i++ {
+
+		str.WriteString(args[i])
 		str.WriteString(sep)
 	}
-	return strings.TrimRight(str.String(), sep)
+
+	str.WriteString(args[lagrs-1])
+
+	return str.String()
 
 }
