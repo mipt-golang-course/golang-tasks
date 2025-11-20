@@ -42,69 +42,83 @@ var spell_tens = map[int64]string{
 	9: "ninety",
 }
 
+var checking = []struct {
+	value int64
+	spell string
+}{
+	{
+		value: 1_000_000_000,
+		spell: "billion",
+	},
+	{
+		value: 1_000_000,
+		spell: "million",
+	},
+	{
+		value: 1_000,
+		spell: "thousand",
+	},
+	{
+		value: 100,
+		spell: "hundred",
+	},
+}
+
 func Spell(n int64) string {
-	if n < 0 {
-		return "minus " + Spell(-n)
-	}
-
 	switch {
-
+	case n < 0:
+		return "minus " + Spell(-n)
 	case n == 0:
 		return "zero"
-
-	case n < 100:
-		return spelling_to_hundred(n)
-
-	case n >= 100:
-		return spelling_after_hundred(n)
-
 	default:
-		return ""
+		spell, _ := spelling(n)
+		return spell
 	}
 }
 
-func spelling_to_hundred(n int64) string {
+func spelling(n int64) (string, bool) {
+	var spell strings.Builder
+
 	switch {
 	case n < 10:
-		{
-			return spell_ones[n]
-		}
+		head_part, ok := spell_ones[n]
+		return head_part, ok
+
 	case n < 20:
-		{
-			return spell_teens[n]
-		}
+		head_part, ok := spell_teens[n]
+		return head_part, ok
+
 	case n < 100:
-		{
-			v := spell_tens[n/10] + "-" + spell_ones[n%10]
-			return strings.TrimRight(v, "-")
+
+		head_part := spell_tens[n/10]
+		tail_part, tail_ok := spell_ones[n%10]
+
+		spell.WriteString(head_part)
+		if tail_ok {
+			spell.WriteString("-")
+			spell.WriteString(tail_part)
+			return spell.String(), true
 		}
-	default:
-		return ""
-	}
-}
-
-func spelling_after_hundred(n int64) string {
-	switch {
-	case n < 100:
-		v := spelling_to_hundred(n)
-		return strings.TrimSpace(v)
-	case n < 1000:
-		v := spelling_after_hundred(n/100) + " hundred " + spelling_after_hundred(n%100)
-		return strings.TrimSpace(v)
-
-	case n < 1000000:
-		v := spelling_after_hundred(n/1000) + " thousand " + spelling_after_hundred(n%1000)
-		return strings.TrimSpace(v)
-
-	case n < 1000000000:
-		v := spelling_after_hundred(n/1000000) + " million " + spelling_after_hundred(n%1000000)
-		return strings.TrimSpace(v)
-
-	case n < 1000000000000:
-		v := spelling_after_hundred(n/1000000000) + " billion " + spelling_after_hundred(n%1000000000)
-		return strings.TrimSpace(v)
+		return spell.String(), true
 
 	default:
-		return ""
+		for _, check := range checking {
+			if n >= check.value {
+				head_part, _ := spelling(n / check.value)
+				tail_part, tail_ok := spelling(n % check.value)
+
+				spell.WriteString(head_part)
+				spell.WriteString(" ")
+				spell.WriteString(check.spell)
+
+				if tail_ok {
+					spell.WriteString(" ")
+					spell.WriteString(tail_part)
+					return spell.String(), true
+				}
+				return spell.String(), true
+			}
+		}
 	}
+	return spell.String(), false
 }
