@@ -71,54 +71,56 @@ func Spell(n int64) string {
 	case n == 0:
 		return "zero"
 	default:
-		spell, _ := spelling(n)
-		return spell
+		var bstr strings.Builder
+		spell, _ := spelling(n, bstr)
+		return spell.String()
 	}
 }
 
-func spelling(n int64) (string, bool) {
-	var spell strings.Builder
+func spelling(n int64, bstr strings.Builder) (strings.Builder, bool) {
 
 	switch {
 	case n < 10:
 		head_part, ok := spell_ones[n]
-		return head_part, ok
+		bstr.WriteString(head_part)
+		return bstr, ok
 
 	case n < 20:
 		head_part, ok := spell_teens[n]
-		return head_part, ok
+		bstr.WriteString(head_part)
+		return bstr, ok
 
 	case n < 100:
 
 		head_part := spell_tens[n/10]
 		tail_part, tail_ok := spell_ones[n%10]
 
-		spell.WriteString(head_part)
+		bstr.WriteString(head_part)
 		if tail_ok {
-			spell.WriteString("-")
-			spell.WriteString(tail_part)
-			return spell.String(), true
+			bstr.WriteString("-")
+			bstr.WriteString(tail_part)
+			return bstr, true
 		}
-		return spell.String(), true
+		return bstr, true
 
 	default:
 		for _, check := range checking {
 			if n >= check.value {
-				head_part, _ := spelling(n / check.value)
-				tail_part, tail_ok := spelling(n % check.value)
+				head_part, _ := spelling(n/check.value, bstr)
+				tail_part, tail_ok := spelling(n%check.value, bstr)
 
-				spell.WriteString(head_part)
-				spell.WriteString(" ")
-				spell.WriteString(check.spell)
+				bstr.WriteString(head_part.String())
+				bstr.WriteString(" ")
+				bstr.WriteString(check.spell)
 
 				if tail_ok {
-					spell.WriteString(" ")
-					spell.WriteString(tail_part)
-					return spell.String(), true
+					bstr.WriteString(" ")
+					bstr.WriteString(tail_part.String())
+					return bstr, true
 				}
-				return spell.String(), true
+				return bstr, true
 			}
 		}
 	}
-	return spell.String(), false
+	return bstr, false
 }
