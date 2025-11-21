@@ -7,17 +7,17 @@ import (
 )
 
 func Join(sep string, args ...string) string {
-	var str strings.Builder
-
 	lagrs := len(args)
 
 	if lagrs == 0 {
-		return str.String()
+		return ""
 	}
+
+	var str strings.Builder
 
 	grow := 0
 	for _, i := range args {
-		grow += len(i)
+		grow += len(i) + len(sep)
 	}
 
 	str.Grow(grow)
