@@ -14,7 +14,7 @@ func Join(sep string, args ...string) string {
 	}
 
 	var str strings.Builder
-	len_sep := len(sep)*len(args) - 1
+	len_sep := (len(sep) * len(args)) - 1
 	grow := len_sep
 	for _, i := range args {
 		grow += len(i)
