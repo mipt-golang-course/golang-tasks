@@ -18,7 +18,7 @@ type Load struct {
 
 func ComputeLoad(guests []Guest) []Load {
 	loadByDays := getLoadByDays(guests)
-	days := getDays(guests)
+	days := getDays(loadByDays)
 
 	load := []Load{}
 
@@ -31,8 +31,9 @@ func ComputeLoad(guests []Guest) []Load {
 				StartDate:  day,
 				GuestCount: loadByDay,
 			})
+			prevLoadDay = loadByDay
 		}
-		prevLoadDay = loadByDay
+
 	}
 	return load
 }
@@ -46,16 +47,9 @@ func getLoadByDays(guests []Guest) map[int]int {
 	return loadMap
 }
 
-func getDays(guests []Guest) []int {
-	setDays := make(map[int]struct{})
-	for _, guest := range guests {
-		setDays[guest.CheckInDate] = struct{}{}
-		setDays[guest.CheckOutDate] = struct{}{}
-	}
-
-	days := make([]int, 0, len(setDays))
-
-	for day := range setDays {
+func getDays(loadByDays map[int]int) []int {
+	days := make([]int, 0, len(loadByDays))
+	for day := range loadByDays {
 		days = append(days, day)
 	}
 	slices.Sort(days)
