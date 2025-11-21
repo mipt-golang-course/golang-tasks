@@ -42,7 +42,7 @@ var spell_tens = map[int64]string{
 	9: "ninety",
 }
 
-var checking = []struct {
+var checking_after_hundreds = []struct {
 	value int64
 	spell string
 }{
@@ -104,7 +104,7 @@ func spelling(n int64, bstr strings.Builder) (strings.Builder, bool) {
 		return bstr, true
 
 	default:
-		for _, check := range checking {
+		for _, check := range checking_after_hundreds {
 			if n >= check.value {
 				head_part, _ := spelling(n/check.value, bstr)
 				tail_part, tail_ok := spelling(n%check.value, bstr)
