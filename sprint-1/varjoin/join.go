@@ -14,10 +14,10 @@ func Join(sep string, args ...string) string {
 	}
 
 	var str strings.Builder
-
-	grow := 0
+	len_sep := len(sep)*len(args) - 1
+	grow := len_sep
 	for _, i := range args {
-		grow += len(i) + len(sep)
+		grow += len(i)
 	}
 
 	str.Grow(grow)
