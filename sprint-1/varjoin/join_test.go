@@ -29,7 +29,9 @@ func TestFormat(t *testing.T) {
 		},
 	} {
 		t.Run(tc.result, func(t *testing.T) {
-			require.Equal(t, tc.result, Join(tc.sep, tc.args...))
+			require.Equal(t, tc.result, Join1(tc.sep, tc.args...))
+			require.Equal(t, tc.result, Join2(tc.sep, tc.args...))
+			require.Equal(t, tc.result, Join3(tc.sep, tc.args...))
 		})
 	}
 }
