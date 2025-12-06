@@ -75,12 +75,12 @@ go run main.go .
 Для запуска тестов нужно выполнить следующую команду:
 
 ```
-go test -v ./sprint-3/tree/...
+go test -v ./sprint-4/tree/...
 ```
 
 ### Линтер
 
 Если вы ещё этого не сделали, установите [golangci-lint](https://github.com/golangci/golangci-lint) и проверьте решение перед отправкой!
 ```
-golangci-lint -v run ./sprint-3/tree/...
+golangci-lint -v run ./sprint-4/tree/...
 ```

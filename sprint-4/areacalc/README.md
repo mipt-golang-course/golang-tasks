@@ -9,12 +9,12 @@
 Для запуска тестов нужно выполнить следующую команду:
 
 ```
-go test -v ./sprint-3/areacalc/...
+go test -v ./sprint-4/areacalc/...
 ```
 
 ### Линтер
 
 Если вы ещё этого не сделали, установите [golangci-lint](https://github.com/golangci/golangci-lint) и проверьте решение перед отправкой!
 ```
-golangci-lint -v run ./sprint-3/areacalc/...
+golangci-lint -v run ./sprint-4/areacalc/...
 ```

@@ -48,12 +48,12 @@ FAIL
 Для запуска тестов нужно выполнить следующую команду:
 
 ```
-go test -v ./sprint-3/testequal/...
+go test -v ./sprint-4/testequal/...
 ```
 
 ### Линтер
 
 Если вы ещё этого не сделали, установите [golangci-lint](https://github.com/golangci/golangci-lint) и проверьте решение перед отправкой!
 ```
-golangci-lint -v run ./sprint-3/testequal/...
+golangci-lint -v run ./sprint-4/testequal/...
 ```
