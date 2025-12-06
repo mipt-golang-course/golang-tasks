@@ -1,6 +1,6 @@
 module github.com/mipt-golang-course/golang-tasks
 
-go 1.22.2
+go 1.24.1
 
 require github.com/stretchr/testify v1.9.0
 
